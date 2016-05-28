@@ -66,3 +66,9 @@ swiftmailer:
     username:  "%mailer_user%"
     password:  "%mailer_password%"
     spool:     { type: memory }
+
+sqs_php:
+    queues:
+        analyzed_data_queue:
+            url: "%sqs_url%"
+            worker: ['AppBundle\Services\GetAnalyzedData', 'getDataWithId']
