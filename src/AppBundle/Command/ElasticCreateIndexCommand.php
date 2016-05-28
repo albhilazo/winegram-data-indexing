@@ -10,25 +10,56 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class ElasticCreateIndexCommand extends ContainerAwareCommand
 {
+
+    const INDEX_NAME = 'winegram';
+
     protected function configure()
     {
         $this
             ->setName('elastic:create:index')
-            ->setDescription('...')
-            ->addArgument('argument', InputArgument::OPTIONAL, 'Argument description')
-            ->addOption('option', null, InputOption::VALUE_NONE, 'Option description')
+            ->setDescription('Creates the "'.self::INDEX_NAME.'" Elasticsearch index')
         ;
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $argument = $input->getArgument('argument');
+        $container = $this->getContainer();
 
-        if ($input->getOption('option')) {
-            // ...
+        $client = $container->get('elastic.client');
+
+        $params = [
+            'index' => self::INDEX_NAME,
+            'body' => [
+                'mappings' => [
+                    'tweets' => [
+                        'properties' => [
+                            'user' => [
+                                'type' => 'string',
+                                'analyzer' => 'standard'
+                            ],
+                            'time' => [
+                                'type' => 'string',
+                                'analyzer' => 'standard'
+                            ],
+                            'content' => [
+                                'type' => 'string',
+                                'analyzer' => 'standard'
+                            ]
+                        ]
+                    ]
+                ]
+            ]
+        ];
+
+        if ($client->indices()->exists(['index' => self::INDEX_NAME])) {
+            $response = $client->indices()->delete(['index' => self::INDEX_NAME]);
+            $output->writeln("\nDelete index:");
+            $output->writeln(var_dump($response));
         }
 
-        $output->writeln('Command result.');
+        $response = $client->indices()->create($params);
+        $output->writeln("\nCreate index:");
+        $output->writeln(var_dump($response));
     }
 
 }
