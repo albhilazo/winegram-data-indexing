@@ -71,4 +71,4 @@ sqs_php:
     queues:
         analyzed_data_queue:
             url: "%sqs_url%"
-            worker: ['AppBundle\Services\GetAnalyzedData', 'getDataWithId']
+            worker: ['AppBundle\Services\GetAnalyzedData', 'getData']
