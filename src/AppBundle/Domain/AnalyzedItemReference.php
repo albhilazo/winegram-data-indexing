@@ -2,7 +2,7 @@
 
 namespace AppBundle\Domain;
 
-class AnalyzedItem
+class AnalyzedItemReference
 {
 
     private $type;
