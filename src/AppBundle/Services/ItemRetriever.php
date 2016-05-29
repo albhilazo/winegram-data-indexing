@@ -22,9 +22,9 @@ class ItemRetriever
 
 
 
-    public function get(ItemReference $analyzedItemRef)
+    public function get(ItemReference $itemReference)
     {
-        switch ($analyzedItemRef->type()) {
+        switch ($itemReference->type()) {
             case 'tweet':
                 $repository = $this->entityManager->getRepository('AppBundle:Tweet');
                 break;
@@ -33,7 +33,7 @@ class ItemRetriever
                 return;
         }
 
-        return $repository->find($analyzedItemRef->id());
+        return $repository->find($itemReference->id());
     }
 
 }
