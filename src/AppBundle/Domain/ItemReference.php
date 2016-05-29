@@ -2,11 +2,15 @@
 
 namespace AppBundle\Domain;
 
-class AnalyzedItemReference
+
+class ItemReference
 {
 
     private $type;
     private $id;
+
+
+
 
     public function __construct($type, $id)
     {
@@ -14,10 +18,16 @@ class AnalyzedItemReference
         $this->id = $id;
     }
 
+
+
+
     public function type()
     {
         return $this->type;
     }
+
+
+
 
     public function id()
     {
