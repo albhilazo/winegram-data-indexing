@@ -3,7 +3,7 @@
 namespace AppBundle\Services;
 
 use Doctrine\ORM\EntityManager;
-use AppBundle\Domain\AnalyzedItemReference;
+use AppBundle\Domain\ItemReference;
 
 
 class ItemRetriever
@@ -22,7 +22,7 @@ class ItemRetriever
 
 
 
-    public function get(AnalyzedItemReference $analyzedItemRef)
+    public function get(ItemReference $analyzedItemRef)
     {
         switch ($analyzedItemRef->type()) {
             case 'tweet':
