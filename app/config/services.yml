@@ -20,10 +20,16 @@ services:
     arguments:
       - "@doctrine.orm.entity_manager"
 
+  index_item.item_indexer:
+    class: AppBundle\Services\ItemIndexer
+    arguments:
+      - "@elastic.client"
+
   index_item:
     class: AppBundle\Services\IndexItem
     arguments:
       - "@index_item.item_retriever"
+      - "@index_item.item_indexer"
 
   index_item.message_handler:
     class: AppBundle\Infrastructure\IndexItemMessageHandler
