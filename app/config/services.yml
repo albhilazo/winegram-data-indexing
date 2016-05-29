@@ -4,12 +4,28 @@ parameters:
 #    parameter_name: value
 
 services:
+
   elastic.client.factory:
     class: Elasticsearch\ClientBuilder
     factory: [Elasticsearch\ClientBuilder, create]
     calls:
       - [setHosts, ["%elastic.hosts%"]]
+
   elastic.client:
     class: Elasticsearch\Client
     factory: ["@elastic.client.factory", build]
 
+  index_item.item_retriever:
+    class: AppBundle\Services\ItemRetriever
+    arguments:
+      - "@doctrine.orm.entity_manager"
+
+  index_item:
+    class: AppBundle\Services\IndexItem
+    arguments:
+      - "@index_item.item_retriever"
+
+  index_item.message_handler:
+    class: AppBundle\Infrastructure\IndexItemMessageHandler
+    arguments:
+      - "@index_item"
