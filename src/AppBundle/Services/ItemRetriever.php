@@ -2,13 +2,38 @@
 
 namespace AppBundle\Services;
 
-class GetAnalyzedData
+use Doctrine\ORM\EntityManager;
+use AppBundle\Domain\AnalyzedItemReference;
+
+
+class ItemRetriever
 {
 
-    public static function getData($properties)
+    private $entityManager;
+
+
+
+
+    public function __construct(EntityManager $entityManager)
     {
-        echo $properties['type'];
-        echo $properties['id'];
+        $this->entityManager = $entityManager;
+    }
+
+
+
+
+    public function get(AnalyzedItemReference $analyzedItemRef)
+    {
+        switch ($analyzedItemRef->type()) {
+            case 'tweet':
+                $repository = $this->entityManager->getRepository('AppBundle:Tweet');
+                break;
+
+            default:
+                return;
+        }
+
+        return $repository->find($analyzedItemRef->id());
     }
 
 }
