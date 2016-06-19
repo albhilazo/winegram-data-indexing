@@ -19,6 +19,7 @@ services:
     class: AppBundle\Services\ItemRetriever
     arguments:
       - "@doctrine.orm.entity_manager"
+      - "%uvinum_api_key%"
 
   index_item.item_indexer:
     class: AppBundle\Services\ItemIndexer
