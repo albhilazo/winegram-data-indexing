@@ -47,7 +47,7 @@ class ElasticCreateIndexCommand extends ContainerAwareCommand
                             ]
                         ]
                     ],
-                    'uvinum-product' => [
+                    'wine' => [
                         'properties' => [
                             'name' => [
                                 'type' => 'string',
@@ -82,6 +82,10 @@ class ElasticCreateIndexCommand extends ContainerAwareCommand
                                 'index' => 'no'
                             ],
                             'grapes' => [
+                                'type' => 'string',
+                                'analyzer' => 'standard'
+                            ],
+                            'pairing' => [
                                 'type' => 'string',
                                 'analyzer' => 'standard'
                             ],
