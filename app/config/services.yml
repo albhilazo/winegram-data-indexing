@@ -19,12 +19,12 @@ services:
     class: AppBundle\Services\ItemRetriever
     arguments:
       - "@doctrine.orm.entity_manager"
-      - "%uvinum_api_key%"
 
   index_item.item_indexer:
     class: AppBundle\Services\ItemIndexer
     arguments:
       - "@elastic.client"
+      - "@uvinum.api_handler"
 
   index_item:
     class: AppBundle\Services\IndexItem
@@ -36,3 +36,8 @@ services:
     class: AppBundle\Infrastructure\IndexItemMessageHandler
     arguments:
       - "@index_item"
+
+  uvinum.api_handler:
+    class: AppBundle\Services\UvinumApiHandler
+    arguments:
+      - "%uvinum_api_key%"
