@@ -31,7 +31,7 @@ class ElasticCreateIndexCommand extends ContainerAwareCommand
             'index' => self::INDEX_NAME,
             'body' => [
                 'mappings' => [
-                    'tweets' => [
+                    'tweet' => [
                         'properties' => [
                             'user' => [
                                 'type' => 'string',
@@ -42,6 +42,62 @@ class ElasticCreateIndexCommand extends ContainerAwareCommand
                                 'analyzer' => 'standard'
                             ],
                             'text' => [
+                                'type' => 'string',
+                                'analyzer' => 'standard'
+                            ]
+                        ]
+                    ],
+                    'uvinum-product' => [
+                        'properties' => [
+                            'name' => [
+                                'type' => 'string',
+                                'analyzer' => 'standard'
+                            ],
+                            'rank' => [
+                                'type' => 'string',
+                                'index' => 'no'
+                            ],
+                            'producer_description' => [
+                                'type' => 'string',
+                                'analyzer' => 'standard'
+                            ],
+                            'maker_description' => [
+                                'type' => 'string',
+                                'analyzer' => 'standard'
+                            ],
+                            'url' => [
+                                'type' => 'string',
+                                'index' => 'no'
+                            ],
+                            'vintage' => [
+                                'type' => 'string',
+                                'analyzer' => 'standard'
+                            ],
+                            'wine_type' => [
+                                'type' => 'string',
+                                'analyzer' => 'standard'
+                            ],
+                            'bottle_volume' => [
+                                'type' => 'string',
+                                'index' => 'no'
+                            ],
+                            'grapes' => [
+                                'type' => 'string',
+                                'analyzer' => 'standard'
+                            ],
+                            'alcohol_volume' => [
+                                'type' => 'string',
+                                'index' => 'no'
+                            ],
+                            'image_full' => [
+                                'type' => 'string',
+                                'index' => 'no'
+                            ],
+                            'image_maker_full' => [
+                                'type' => 'string',
+                                'index' => 'no'
+                            ],
+                            'maker' => [
                                 'type' => 'string',
                                 'analyzer' => 'standard'
                             ]
