@@ -34,6 +34,10 @@ class IndexItem
                 $this->itemIndexer->indexTweet($itemToIndex);
                 break;
 
+            case 'uvinum-product':
+                $this->itemIndexer->indexUvinumProduct($itemToIndex);
+                break;
+
             default:
                 return;
         }
