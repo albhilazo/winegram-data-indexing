@@ -93,6 +93,10 @@ class ElasticCreateIndexCommand extends ContainerAwareCommand
                                 'type' => 'string',
                                 'index' => 'no'
                             ],
+                            'long_name' => [
+                                'type' => 'string',
+                                'analyzer' => 'standard'
+                            ],
                             'image_full' => [
                                 'type' => 'string',
                                 'index' => 'no'
