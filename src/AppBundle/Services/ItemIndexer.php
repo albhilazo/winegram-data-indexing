@@ -80,6 +80,18 @@ class ItemIndexer
 
 
 
+    public function indexTopSelling($wineCategory)
+    {
+        $productIds = $this->uvinumApi->getTopSelling($wineCategory);
+
+        foreach ($productIds as $id) {
+            $this->indexWineById($id);
+        }
+    }
+
+
+
+
     public function getSearchType($searchId)
     {
         switch ($searchId) {

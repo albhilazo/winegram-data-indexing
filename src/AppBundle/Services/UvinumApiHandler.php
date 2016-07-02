@@ -35,13 +35,9 @@ class UvinumApiHandler
             . '&instance=' . self::API_INSTANCE
             . '&language=' . self::API_LANGUAGE;
 
-        $resultProducts = $this->sendRequest($request)['products'];
-        $productIds = [];
-        foreach ($resultProducts as $product) {
-            array_push($productIds, $product['id_product']);
-        }
+        $result = $this->sendRequest($request);
 
-        return $productIds;
+        return $this->filterProductIds($result);
     }
 
 
@@ -61,10 +57,41 @@ class UvinumApiHandler
 
 
 
+    public function getTopSelling($wineCategory = 'tinto')
+    {
+var_dump($wineCategory);
+        $request = self::BASE_API_URL
+            . '/getProductsList:k:vinos:o:ventas:t:' . $wineCategory
+            . '?api_key=' . $this->apiKey
+            . '&instance=' . self::API_INSTANCE
+            . '&language=' . self::API_LANGUAGE;
+
+        $result = $this->sendRequest($request);
+
+        return $this->filterProductIds($result);
+    }
+
+
+
+
     private function sendRequest($request)
     {
         $response = (string) $this->httpClient->get($request)->getBody();
         return json_decode($response, true);
+    }
+
+
+
+
+    private function filterProductIds($searchResult)
+    {
+        $resultProducts = $searchResult['products'];
+        $productIds = [];
+        foreach ($resultProducts as $product) {
+            array_push($productIds, $product['id_product']);
+        }
+
+        return $productIds;
     }
 
 }

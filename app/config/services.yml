@@ -38,6 +38,11 @@ services:
       - "@index_item.item_retriever"
       - "@index_item.item_indexer"
 
+  index_topselling:
+    class: AppBundle\Services\IndexTopSelling
+    arguments:
+      - "@index_item.item_indexer"
+
   index_item.message_handler:
     class: AppBundle\Infrastructure\IndexItemMessageHandler
     arguments:
