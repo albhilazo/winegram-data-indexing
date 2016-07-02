@@ -2,49 +2,26 @@
 
 namespace AppBundle\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
-
 /**
  * Tweet
- *
- * @ORM\Table(name="tweet")
- * @ORM\Entity(repositoryClass="AppBundle\Repository\TweetRepository")
  */
 class Tweet
 {
     /**
-     * @var int
-     *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
-    private $id;
-
-    /**
      * @var string
-     *
-     * @ORM\Column(name="user", type="string", length=255)
      */
     private $user;
 
     /**
      * @var string
-     *
-     * @ORM\Column(name="text", type="text")
      */
     private $text;
 
-
     /**
-     * Get id
-     *
-     * @return int
+     * @var integer
      */
-    public function getId()
-    {
-        return $this->id;
-    }
+    private $id;
+
 
     /**
      * Set user
@@ -92,6 +69,16 @@ class Tweet
     public function getText()
     {
         return $this->text;
+    }
+
+    /**
+     * Get id
+     *
+     * @return integer
+     */
+    public function getId()
+    {
+        return $this->id;
     }
 }
 

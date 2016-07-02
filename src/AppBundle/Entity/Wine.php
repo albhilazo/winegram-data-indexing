@@ -2,41 +2,21 @@
 
 namespace AppBundle\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
-
 /**
  * Wine
- *
- * @ORM\Table(name="wine")
- * @ORM\Entity(repositoryClass="AppBundle\Repository\WineRepository")
  */
 class Wine
 {
     /**
      * @var string
-     *
-     * @ORM\Column(name="id", type="string", length=255)
-     * @ORM\Id
-     */
-    private $id;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="name", type="string", length=255)
      */
     private $name;
 
-
     /**
-     * Get id
-     *
-     * @return string
+     * @var string
      */
-    public function getId()
-    {
-        return $this->id;
-    }
+    private $id;
+
 
     /**
      * Set name
@@ -60,6 +40,16 @@ class Wine
     public function getName()
     {
         return $this->name;
+    }
+
+    /**
+     * Get id
+     *
+     * @return string
+     */
+    public function getId()
+    {
+        return $this->id;
     }
 }
 
