@@ -30,6 +30,7 @@ class ItemIndexer
 
     public function indexComment(Comment $item)
     {
+        $searchType = $this->getSearchType($item->getSearchId());
         $params = [
             'index' => self::INDEX_NAME,
             'type'  => 'comment',
@@ -43,12 +44,16 @@ class ItemIndexer
                 'username' => $item->getUsername(),
                 'media' => $item->getMedia(),
                 'query' => $item->getQuery(),
-                'search_type' => $this->getSearchType($item->getSearchId()),
+                'search_type' => $searchType,
                 'search_content' => $item->getSearchContent(),
             ]
         ];
 
         $response = $this->elasticClient->index($params);
+
+        if ($searchType == 'uvinum' && $item->getSearchContent()) {
+            $response = $this->indexWineById($item->getSearchContent());
+        }
     }
 
 
@@ -59,9 +64,17 @@ class ItemIndexer
         $productIds = $this->uvinumApi->searchProducts($item->getName());
 
         foreach ($productIds as $id) {
-            $params = $this->getWineParams($id);
-            $response = $this->elasticClient->index($params);
+            $this->indexWineById($id);
         }
+    }
+
+
+
+
+    public function indexWineById($id)
+    {
+        $params = $this->getWineParams($id);
+        $response = $this->elasticClient->index($params);
     }
 
 
