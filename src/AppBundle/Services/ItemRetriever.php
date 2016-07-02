@@ -24,20 +24,26 @@ class ItemRetriever
 
     public function get(ItemReference $itemReference)
     {
-        switch ($itemReference->type()) {
-            case 'tweet':
-                $repository = $this->entityManager->getRepository('AppBundle:Tweet');
+        $repository = $this->getRepository($itemReference->type());
+        if (!$repository)  return;
+
+        return $repository->find($itemReference->id());
+    }
+
+
+
+
+    private function getRepository($itemType)
+    {
+        switch ($itemType) {
+            case 'comment':
+                return $this->entityManager->getRepository('AppBundle:Comment');
                 break;
 
             case 'wine':
-                $repository = $this->entityManager->getRepository('AppBundle:Wine');
+                return $this->entityManager->getRepository('AppBundle:Wine');
                 break;
-
-            default:
-                return;
         }
-
-        return $repository->find($itemReference->id());
     }
 
 }

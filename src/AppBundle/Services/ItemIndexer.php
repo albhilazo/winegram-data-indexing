@@ -4,7 +4,7 @@ namespace AppBundle\Services;
 
 use Elasticsearch\Client;
 use AppBundle\Services\UvinumApiHandler;
-use AppBundle\Entity\Tweet;
+use AppBundle\Entity\Comment;
 use AppBundle\Entity\Wine;
 
 
@@ -28,15 +28,23 @@ class ItemIndexer
 
 
 
-    public function indexTweet(Tweet $item)
+    public function indexComment(Comment $item)
     {
         $params = [
             'index' => self::INDEX_NAME,
-            'type'  => 'tweet',
+            'type'  => 'comment',
             'id'    => $item->getId(),
             'body'  => [
-                'user' => $item->getUser(),
-                'text' => $item->getText(),
+                'original_text' => $item->getOriginalText(),
+                'lang' => $item->getLang(),
+                'text_sentiment' => $item->getTextSentiment(),
+                'text_tweet_sentiment' => $item->getTextTwittSentiment(),
+                'type' => $item->getType(),
+                'username' => $item->getUsername(),
+                'media' => $item->getMedia(),
+                'query' => $item->getQuery(),
+                'search_type' => $this->getSearchType($item->getSearchId()),
+                'search_content' => $item->getSearchContent(),
             ]
         ];
 
@@ -53,6 +61,23 @@ class ItemIndexer
         foreach ($productIds as $id) {
             $params = $this->getWineParams($id);
             $response = $this->elasticClient->index($params);
+        }
+    }
+
+
+
+
+    public function getSearchType($searchId)
+    {
+        switch ($searchId) {
+            case '1':
+                return 'uvinum';
+
+            case '2':
+                return 'do';
+
+            default:
+                return 'other';
         }
     }
 

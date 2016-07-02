@@ -30,8 +30,8 @@ class IndexItem
         $itemToIndex = $this->itemRetriever->get($itemReference);
 
         switch ($itemReference->type()) {
-            case 'tweet':
-                $this->itemIndexer->indexTweet($itemToIndex);
+            case 'comment':
+                $this->itemIndexer->indexComment($itemToIndex);
                 break;
 
             case 'wine':
