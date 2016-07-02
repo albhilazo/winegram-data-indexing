@@ -51,7 +51,7 @@ class ElasticCreateIndexCommand extends ContainerAwareCommand
                             ],
                             'type' => [
                                 'type' => 'string',
-                                'index' => 'no'
+                                'analyzer' => 'standard'
                             ],
                             'username' => [
                                 'type' => 'string',
@@ -67,11 +67,11 @@ class ElasticCreateIndexCommand extends ContainerAwareCommand
                             ],
                             'search_type' => [
                                 'type' => 'string',
-                                'index' => 'no'
+                                'analyzer' => 'standard'
                             ],
                             'search_content' => [
                                 'type' => 'string',
-                                'index' => 'no'
+                                'analyzer' => 'standard'
                             ],
                         ]
                     ],
