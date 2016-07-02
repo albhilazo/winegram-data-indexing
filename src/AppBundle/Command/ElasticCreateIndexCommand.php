@@ -31,20 +31,48 @@ class ElasticCreateIndexCommand extends ContainerAwareCommand
             'index' => self::INDEX_NAME,
             'body' => [
                 'mappings' => [
-                    'tweet' => [
+                    'comment' => [
                         'properties' => [
-                            'user' => [
+                            'original_text' => [
                                 'type' => 'string',
                                 'analyzer' => 'standard'
                             ],
-                            'time' => [
+                            'lang' => [
+                                'type' => 'string',
+                                'index' => 'no'
+                            ],
+                            'text_sentiment' => [
+                                'type' => 'string',
+                                'index' => 'no'
+                            ],
+                            'text_tweet_sentiment' => [
+                                'type' => 'string',
+                                'index' => 'no'
+                            ],
+                            'type' => [
+                                'type' => 'string',
+                                'index' => 'no'
+                            ],
+                            'username' => [
                                 'type' => 'string',
                                 'analyzer' => 'standard'
                             ],
-                            'text' => [
+                            'media' => [
+                                'type' => 'string',
+                                'index' => 'no'
+                            ],
+                            'query' => [
                                 'type' => 'string',
                                 'analyzer' => 'standard'
-                            ]
+                            ],
+                            'search_type' => [
+                                'type' => 'string',
+                                'index' => 'no'
+                            ],
+                            'search_content' => [
+                                'type' => 'string',
+                                'index' => 'no'
+                            ],
                         ]
                     ],
                     'wine' => [
