@@ -32,6 +32,12 @@ services:
       - "@index_item.item_retriever"
       - "@index_item.item_indexer"
 
+  index_all:
+    class: AppBundle\Services\IndexAll
+    arguments:
+      - "@index_item.item_retriever"
+      - "@index_item.item_indexer"
+
   index_item.message_handler:
     class: AppBundle\Infrastructure\IndexItemMessageHandler
     arguments:

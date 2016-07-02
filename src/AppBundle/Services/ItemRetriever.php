@@ -33,6 +33,17 @@ class ItemRetriever
 
 
 
+    public function getAll($itemType)
+    {
+        $repository = $this->getRepository($itemType);
+        if (!$repository)  return;
+
+        return $repository->findAll();
+    }
+
+
+
+
     private function getRepository($itemType)
     {
         switch ($itemType) {
