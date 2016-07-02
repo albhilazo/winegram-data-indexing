@@ -32,6 +32,9 @@ class ElasticCreateIndexCommand extends ContainerAwareCommand
             'body' => [
                 'mappings' => [
                     'comment' => [
+                        '_timestamp' => [
+                            'enabled' => 'true',
+                        ],
                         'properties' => [
                             'original_text' => [
                                 'type' => 'string',
