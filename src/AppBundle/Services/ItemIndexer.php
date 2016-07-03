@@ -115,7 +115,7 @@ class ItemIndexer
 
         $paramsBody = [];
 
-        $dataFields = ['name', 'rank', 'producer_description', 'maker_description',
+        $dataFields = ['name', 'rank', 'producer_description', 'category', 'maker_description',
                        'url', 'long_name', 'image_full', 'image_maker_full', 'maker'];
         foreach ($dataFields as $fieldName) {
             if (!isset($result[$fieldName])) {

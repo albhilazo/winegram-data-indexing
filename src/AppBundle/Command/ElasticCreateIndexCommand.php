@@ -92,6 +92,10 @@ class ElasticCreateIndexCommand extends ContainerAwareCommand
                                 'type' => 'string',
                                 'analyzer' => 'standard'
                             ],
+                            'category' => [
+                                'type' => 'string',
+                                'analyzer' => 'standard'
+                            ],
                             'maker_description' => [
                                 'type' => 'string',
                                 'analyzer' => 'standard'
