@@ -38,6 +38,10 @@ class ElasticCreateIndexCommand extends ContainerAwareCommand
                         'properties' => [
                             'original_text' => [
                                 'type' => 'string',
+                                'index' => 'no'
+                            ],
+                            'original_text_default' => [
+                                'type' => 'string',
                                 'analyzer' => 'basic_analyzer'
                             ],
                             'original_text_en' => [

@@ -31,7 +31,7 @@ class ItemIndexer
 
     public function indexComment(Comment $item)
     {
-        $originalTextKey = 'original_text'.$this->getSupportedLanguageSuffix($item->getLang());
+        $originalTextLang = 'original_text'.$this->getSupportedLanguageSuffix($item->getLang());
         $searchType = $this->getSearchType($item->getSearchId());
 
         $params = [
@@ -39,7 +39,8 @@ class ItemIndexer
             'type'  => 'comment',
             'id'    => $item->getId(),
             'body'  => [
-                $originalTextKey => $item->getOriginalText(),
+                'original_text' => $item->getOriginalText(),
+                $originalTextLang => $item->getOriginalText(),
                 'lang' => $item->getLang(),
                 'text_sentiment' => $item->getTextSentiment(),
                 'text_tweet_sentiment' => $item->getTextTwittSentiment(),
@@ -161,7 +162,7 @@ class ItemIndexer
 
     private function getSupportedLanguageSuffix($lang)
     {
-        $langSuffix = '';
+        $langSuffix = '_default';
 
         if (in_array($lang, self::SUPPORTED_LANGS)) {
             $langSuffix = '_'.$lang;
