@@ -38,7 +38,7 @@ class ElasticCreateIndexCommand extends ContainerAwareCommand
                         'properties' => [
                             'original_text' => [
                                 'type' => 'string',
-                                'analyzer' => 'standard'
+                                'analyzer' => 'basic_analyzer'
                             ],
                             'lang' => [
                                 'type' => 'string',
@@ -54,11 +54,11 @@ class ElasticCreateIndexCommand extends ContainerAwareCommand
                             ],
                             'type' => [
                                 'type' => 'string',
-                                'analyzer' => 'standard'
+                                'analyzer' => 'basic_analyzer'
                             ],
                             'username' => [
                                 'type' => 'string',
-                                'analyzer' => 'standard'
+                                'analyzer' => 'basic_analyzer'
                             ],
                             'media' => [
                                 'type' => 'string',
@@ -66,15 +66,15 @@ class ElasticCreateIndexCommand extends ContainerAwareCommand
                             ],
                             'query' => [
                                 'type' => 'string',
-                                'analyzer' => 'standard'
+                                'analyzer' => 'basic_analyzer'
                             ],
                             'search_type' => [
                                 'type' => 'string',
-                                'analyzer' => 'standard'
+                                'analyzer' => 'basic_analyzer'
                             ],
                             'search_content' => [
                                 'type' => 'string',
-                                'analyzer' => 'standard'
+                                'analyzer' => 'basic_analyzer'
                             ],
                         ]
                     ],
@@ -82,7 +82,7 @@ class ElasticCreateIndexCommand extends ContainerAwareCommand
                         'properties' => [
                             'name' => [
                                 'type' => 'string',
-                                'analyzer' => 'standard'
+                                'analyzer' => 'basic_analyzer'
                             ],
                             'rank' => [
                                 'type' => 'string',
@@ -90,15 +90,15 @@ class ElasticCreateIndexCommand extends ContainerAwareCommand
                             ],
                             'producer_description' => [
                                 'type' => 'string',
-                                'analyzer' => 'standard'
+                                'analyzer' => 'basic_analyzer'
                             ],
                             'category' => [
                                 'type' => 'string',
-                                'analyzer' => 'standard'
+                                'analyzer' => 'basic_analyzer'
                             ],
                             'maker_description' => [
                                 'type' => 'string',
-                                'analyzer' => 'standard'
+                                'analyzer' => 'basic_analyzer'
                             ],
                             'url' => [
                                 'type' => 'string',
@@ -106,11 +106,11 @@ class ElasticCreateIndexCommand extends ContainerAwareCommand
                             ],
                             'vintage' => [
                                 'type' => 'string',
-                                'analyzer' => 'standard'
+                                'analyzer' => 'basic_analyzer'
                             ],
                             'wine_type' => [
                                 'type' => 'string',
-                                'analyzer' => 'standard'
+                                'analyzer' => 'basic_analyzer'
                             ],
                             'bottle_volume' => [
                                 'type' => 'string',
@@ -118,11 +118,11 @@ class ElasticCreateIndexCommand extends ContainerAwareCommand
                             ],
                             'grapes' => [
                                 'type' => 'string',
-                                'analyzer' => 'standard'
+                                'analyzer' => 'basic_analyzer'
                             ],
                             'pairing' => [
                                 'type' => 'string',
-                                'analyzer' => 'standard'
+                                'analyzer' => 'basic_analyzer'
                             ],
                             'alcohol_volume' => [
                                 'type' => 'string',
@@ -130,7 +130,7 @@ class ElasticCreateIndexCommand extends ContainerAwareCommand
                             ],
                             'long_name' => [
                                 'type' => 'string',
-                                'analyzer' => 'standard'
+                                'analyzer' => 'basic_analyzer'
                             ],
                             'image_full' => [
                                 'type' => 'string',
@@ -142,7 +142,84 @@ class ElasticCreateIndexCommand extends ContainerAwareCommand
                             ],
                             'maker' => [
                                 'type' => 'string',
-                                'analyzer' => 'standard'
+                                'analyzer' => 'basic_analyzer'
+                            ]
+                        ]
+                    ]
+                ],
+
+                'settings' => [
+                    'analysis' => [
+
+                        // Character filters are processed before the tokenizer
+                        // Any pattern token or escaping must be backslashed twice
+                        'char_filter' => [],
+
+                        // Token filters modify tokens received from a tokenizer
+                        'filter' => [
+                            // English
+                            'english_stop' => [
+                                'type' => 'stop',
+                                'stopwords' => '_english_'
+                            ],
+                            'english_stemmer' => [
+                                'type' => 'stemmer',
+                                'language' => 'english'
+                            ],
+                            'english_possessive_stemmer' => [
+                                'type' => 'stemmer',
+                                'language' => 'possessive_english'
+                            ],
+
+                            // Spanish
+                            'spanish_stop' => [
+                                "type"      => "stop",
+                                "stopwords" => "_spanish_" 
+                            ],
+                            'spanish_stemmer' => [
+                                "type"     => "stemmer",
+                                "language" => "light_spanish"
+                            ],
+
+                            // Catalan
+                            'catalan_elision' => [
+                                "type"     => "elision",
+                                '"articles"' => [ "d", "l", "m", "n", "s", "t" ]
+                            ],
+                            'catalan_stop' => [
+                                "type"      => "stop",
+                                "stopwords" => "_catalan_" 
+                            ],
+                            'catalan_stemmer' => [
+                                "type"     => "stemmer",
+                                "language" => "catalan"
+                            ]
+                        ],
+
+                        // Analyzers are composed of a single tokenizer
+                        //   and zero or more token filters and char filters
+                        'analyzer' => [
+                            // Filter order matters
+
+                            'basic_analyzer' => [
+                              "tokenizer"   => "standard",
+                              "filter"      => ["lowercase", "asciifolding"],
+                              "char_filter" => ["html_strip"],
+                            ],
+                            'basic_analyzer_en' => [
+                              "tokenizer"   => "standard",
+                              "filter"      => ["english_possessive_stemmer", "lowercase", "asciifolding", "english_stop", "english_stemmer"],
+                              "char_filter" => ["html_strip"],
+                            ],
+                            'basic_analyzer_es' => [
+                              "tokenizer"   => "standard",
+                              "filter"      => ["lowercase", "asciifolding", "spanish_stop", "spanish_stemmer"],
+                              "char_filter" => ["html_strip"],
+                            ],
+                            'basic_analyzer_ca' => [
+                              "tokenizer"   => "standard",
+                              "filter"      => ["catalan_elision", "lowercase", "asciifolding", "catalan_stop", "catalan_stemmer"],
+                              "char_filter" => ["html_strip"],
                             ]
                         ]
                     ]
