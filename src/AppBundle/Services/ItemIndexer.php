@@ -12,6 +12,7 @@ class ItemIndexer
 {
 
     const INDEX_NAME = 'winegram';
+    const SUPPORTED_LANGS = ['en', 'es', 'ca'];
 
     private $elasticClient;
     private $uvinumApi;
@@ -30,13 +31,15 @@ class ItemIndexer
 
     public function indexComment(Comment $item)
     {
+        $originalTextKey = 'original_text'.$this->getSupportedLanguageSuffix($item->getLang());
         $searchType = $this->getSearchType($item->getSearchId());
+
         $params = [
             'index' => self::INDEX_NAME,
             'type'  => 'comment',
             'id'    => $item->getId(),
             'body'  => [
-                'original_text' => $item->getOriginalText(),
+                $originalTextKey => $item->getOriginalText(),
                 'lang' => $item->getLang(),
                 'text_sentiment' => $item->getTextSentiment(),
                 'text_tweet_sentiment' => $item->getTextTwittSentiment(),
@@ -151,6 +154,20 @@ class ItemIndexer
             'id'    => $productId,
             'body'  => $paramsBody
         ];
+    }
+
+
+
+
+    private function getSupportedLanguageSuffix($lang)
+    {
+        $langSuffix = '';
+
+        if (in_array($lang, self::SUPPORTED_LANGS)) {
+            $langSuffix = '_'.$lang;
+        }
+
+        return $langSuffix;
     }
 
 }

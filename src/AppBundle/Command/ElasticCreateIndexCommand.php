@@ -40,6 +40,18 @@ class ElasticCreateIndexCommand extends ContainerAwareCommand
                                 'type' => 'string',
                                 'analyzer' => 'basic_analyzer'
                             ],
+                            'original_text_en' => [
+                                'type' => 'string',
+                                'analyzer' => 'basic_analyzer_en'
+                            ],
+                            'original_text_es' => [
+                                'type' => 'string',
+                                'analyzer' => 'basic_analyzer_es'
+                            ],
+                            'original_text_ca' => [
+                                'type' => 'string',
+                                'analyzer' => 'basic_analyzer_ca'
+                            ],
                             'lang' => [
                                 'type' => 'string',
                                 'index' => 'no'
