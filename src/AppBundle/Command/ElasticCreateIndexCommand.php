@@ -62,11 +62,11 @@ class ElasticCreateIndexCommand extends ContainerAwareCommand
                             ],
                             'text_sentiment' => [
                                 'type' => 'string',
-                                'index' => 'no'
+                                'analyzer' => 'basic_analyzer'
                             ],
                             'text_tweet_sentiment' => [
                                 'type' => 'string',
-                                'index' => 'no'
+                                'analyzer' => 'basic_analyzer'
                             ],
                             'type' => [
                                 'type' => 'string',
